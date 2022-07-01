@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import "../styles/globals.css";
+// import "../styles/globals.css";
 import { StoreProvider } from "../utils/Store";
+import { SnackbarProvider } from "notistack";
 
 function MyApp({ Component, pageProps }) {
   const [mounted, setMounted] = useState(false);
@@ -15,9 +16,12 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return mounted ? (
-    <StoreProvider>
-      <Component {...pageProps} />;
-    </StoreProvider>
+    <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+      {" "}
+      <StoreProvider>
+        <Component {...pageProps} />;
+      </StoreProvider>
+    </SnackbarProvider>
   ) : null;
 }
 

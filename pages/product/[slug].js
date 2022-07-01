@@ -21,16 +21,21 @@ import { useContext } from "react";
 import { Store } from "../../utils/Store";
 
 const ProductScreen = ({ product }) => {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
+  const router = useRouter();
 
   const classes = useStyles();
   // const router = useRouter();
   // const { slug } = router.query;
   // const product = data.products.find((element) => element.slug === slug);
   if (!product) return <div>Product not found</div>;
+  
   const addToCart = async () => {
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock <= 0) {
+
+    if (data.countInStock < quantity) {
       alert("Sorry. Product is out of stock");
       return;
     }
@@ -38,9 +43,11 @@ const ProductScreen = ({ product }) => {
       type: "ADD_ITEM_TO_CART",
       payload: {
         ...product,
-        quantity: 1,
+        quantity,
       },
     });
+    // navigate to cart screen
+    router.push("/cart");
   };
   return (
     <Layout title={product.name} description={product.description}>
@@ -84,7 +91,7 @@ const ProductScreen = ({ product }) => {
             </ListItem>
           </List>
         </Grid>
-        <Grid md={3} xs={12}>
+        <Grid item md={3} xs={12}>
           <Card>
             <List>
               <ListItem>

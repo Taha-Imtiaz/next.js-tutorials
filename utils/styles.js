@@ -27,5 +27,16 @@ const useStyles = makeStyles({
     marginTop: 10,
     marginBottom: 10,
   },
+  form: {
+    maxWidth: 800,
+    margin: "0 auto",
+  },
+  navbarButton: {
+    color: "#fff",
+    textTransform: "initial",
+  },
+  transparentBackground: {
+    background: "transparent",
+  },
 });
 export default useStyles;
