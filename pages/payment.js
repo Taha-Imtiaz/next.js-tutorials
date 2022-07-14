@@ -29,7 +29,7 @@ const Payment = () => {
     if (!shippingAddress.address) {
       router.push(`/shipping`);
     } else {
-      setPaymentMethod(JSON.parse(Cookies.get("paymentMethod") )|| "");
+      setPaymentMethod(Cookies.get("paymentMethod") ? JSON.parse(Cookies.get("paymentMethod")) : "");
     }
   }, []);
 
@@ -67,8 +67,8 @@ const Payment = () => {
                   control={<Radio />}
                 />
                 <FormControlLabel
-                  label="Stripr"
-                  value="Stripr"
+                  label="Stripe"
+                  value="Stripe"
                   control={<Radio />}
                 />{" "}
                 <FormControlLabel
